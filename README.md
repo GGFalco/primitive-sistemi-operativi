@@ -1,7 +1,12 @@
 # **Primitive in C**
 
-### Creazione di un file
-Operazione di rilascio (_epilogo_`#f03c15`): restituisce la chiave (_indice nella **TFA**_)
+## Creazione di un file
+Operazione di rilascio (_epilogo_): restituisce la chiave (_indice nella **TFA**_)
 ```c
-    creat(char *name, int mode)
+    int fd = creat(char* name, int mode)
+```
+
+## Apertuna di un file
+```c
+    int fd = open(char* name, int flag)
 ```
