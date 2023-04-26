@@ -1,4 +1,6 @@
 # **Primitive in C**
+Qui di seguito le primitive studiate fino ad'ora in C per la programmazione di sistema.
+
 
 ## Creazione di un file
 Operazione di rilascio (_epilogo_): restituisce la chiave (_indice nella **TFA**_)
