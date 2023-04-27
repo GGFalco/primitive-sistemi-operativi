@@ -14,7 +14,9 @@ Operazione di rilascio (_epilogo_): crea il file di nome `name` con i diritti `m
 
 `mode` = mode & ~umask (=0022). Significa che _mode_ sarà 0644
 
-`Return value` file descriptor (_chiave_) del file appena creato, altrimenti un valore < 0
+`Return value` 
+- **file descriptor** (_chiave_) del file appena creato
+- altrimenti un **valore < 0**
 
 `Errors`
 - Spazio insufficiente
@@ -34,7 +36,9 @@ Operazione di richiesta (_prologo_): apre il file di nome `name` in modalità `f
 ```
 `flag` **O_RDONLY, O_WRONLY, O_RDWR**
 
-`Return value` file descriptor del file appena creato, altrimenti un valore < 0
+`Return value`
+- **file descriptor** del file appena creato
+- altrimenti un **valore < 0**
 
 `Errors`
 - File non esistente
@@ -50,7 +54,9 @@ Chide il file corrispondente al file descriptor `fd`. Alla terminazione del proc
     
     int ret = close(int fd)
 ```
-`Return value` 0 in caso di successo, altrimenti < 0
+`Return value` 
+- **0** in caso di successo
+- altrimenti **< 0**
 
 
 
@@ -63,7 +69,11 @@ Leggiamo `n` byte dal file con file descriptor `fd`. I caratteri letti vengono i
     
     int nread = read(int fd, void* buffer, int n)
 ```
-`Return value` restituisce il _numero di byte_ su cui ha lavorato, altrimenti < 0. Se ci sono problemi `nread` è diverso da `n`. Se il **file pointer** è sull'EOF ritorna 0
+`Return value` 
+- **numero di byte** su cui ha lavorato
+- altrimenti **< 0**
+- Se il _file pointer_ è sull'EOF ritorna **0**
+Se ci sono problemi `nread` è diverso da `n`. 
 
 `ATTENZIONE` buffer **NON** è una stringa ma sarà un _array di byte_ nel caso di un _char*_
 
@@ -80,7 +90,10 @@ Scriviamo `n` byte sul file con file descriptor `fd`. I caratteri vengono presi 
 ```
 `<stdio.h>` definisce la costante **BUFSIZ** per allocare un buffer statico
 
-`Return value` restituisce il _numero di byte_ su cui ha lavorato, altrimenti < 0. Se ci sono problemi `nwrite` è diverso da `n`.
+`Return value`
+- **numero di byte** su cui ha lavorato
+- altrimenti **< 0**
+Se ci sono problemi `nwrite` è diverso da `n`.
 
 `ATTENZIONE` buffer **NON** è una stringa ma sarà un _array di byte_ nel caso di un _char*_
 
@@ -98,7 +111,8 @@ Spostiamo il file pointer all'interno del file indicato dal `fd` di `offset` byt
 ```
 `origin` SEEK_SET(0), SEEK_CUR(1), SEEK_END(2)
 
-`Return value` numero di byte a partire dall'inizio del file fino al file pointer
+`Return value` 
+**numero di byte** a partire dall'_inizio_ del file fino al _file pointer_
 
 
 
@@ -135,7 +149,7 @@ Il processo corrente genera un sotto processo figlio. Dopo la generazione si han
     int pid = getpid()
 ```
 `Return value`
-PID del processo corrente
+**PID** del processo corrente
 
 ```c
     #include <unistd.h>
@@ -143,7 +157,7 @@ PID del processo corrente
     int ppid = getppid()
 ```
 `Return value`
-ParentPID, ovvero PID del processo padre
+**ParentPID**, ovvero PID del processo padre
 
 
 
@@ -155,8 +169,8 @@ ParentPID, ovvero PID del processo padre
     int euid = geteuid()
 ```
 `Return value`
-UID del processo corrente
-Effective UID del processo corrente
+**UID** del processo corrente
+**Effective UID** del processo corrente
 
 
 # Group Identifier
@@ -167,8 +181,8 @@ Effective UID del processo corrente
     int egid = getegid()
 ```
 `Return value`
-GID del processo corrente
-Effective GID del processo corrente
+**GID** del processo corrente
+**Effective GID** del processo corrente
 
 
 
@@ -180,17 +194,17 @@ Sospendiamo un processo padre _in attesa_ della terminazione di uno dei processi
     int pid = wait(int *status)
 ```
 `status`
-- Terminazione Normale
+- <ins>Terminazione Normale</ins>
 nel _byte alto_, valore di ritorno della **exit**
 nel _byte basso_, **zero**
 
-- Terminazione Anormale
+- <ins>Terminazione Anormale</ins>
 nel _byte alto_, **zero**
 nel _byte basso_, segnale che ha provocato la terminazione
 
 `Return value`
-**PID** del figlio terminato
-**< 0** in caso non abbia figli da attendere
+- **PID** del figlio terminato
+- **< 0** in caso non abbia figli da attendere
 
 
 
@@ -200,5 +214,5 @@ Chiudiamo tutti i file aperti per il processo che termina
 ```c
     #include <stdlib.h>
     
-    void exit(int status
+    void exit(int status)
 ```
