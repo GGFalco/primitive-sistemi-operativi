@@ -3,7 +3,7 @@ Qui di seguito le primitive studiate fino ad'ora in C per la programmazione di s
 
 
 ## Creazione di un file
-Operazione di rilascio (_epilogo_): restituisce la chiave (_indice nella **TFA**_)
+Operazione di rilascio (_epilogo_): restituisce la chiave (_indice nella **TFA**_).
 ```c
     #include <fcntl.h>
     
@@ -19,7 +19,7 @@ Operazione di rilascio (_epilogo_): restituisce la chiave (_indice nella **TFA**
  
 
 ## Apertura di un file
-Operazione di richiesta (_prologo_): consente di ottenere una chiave (_indice nella **TFA**_)
+Operazione di richiesta (_prologo_): consente di ottenere una chiave (_indice nella **TFA**_).
 ```c
     #include <fcntl.h> 
     
@@ -37,10 +37,38 @@ Operazione di richiesta (_prologo_): consente di ottenere una chiave (_indice ne
 
 
 ## Chiusura di un file
-Chide il file corrispondente al file descriptor `fd`
+Chide il file corrispondente al file descriptor `fd`. Alla terminazione del processo la avviene la chiusura automatica dei file.
 ```c
     #include <unistd.h>
     
-    int ret = close(int fd);
+    int ret = close(int fd)
 ```
 `Return value` 0 in caso di successo, altrimenti < 0
+
+
+
+
+
+## Lettura su un file
+Leggiamo `n` byte dal file con file descriptor `fd`. I caratteri letti vengono inseriti nella memoria puntata da `buffer`.
+```c
+    #include <unistd.h>
+    
+    int nread = read(int fd, char* buffer, int n)
+```
+`ATTENZIONE` buffer **NON** è una stringa ma un _array di byte_
+
+`Return value` restituisce il _numero di byte_ su cui ha lavorato, se ci sono problemi `nread` sarà diverso da `n`. Se il **file pointer** è sull'EOF ritorna 0
+
+
+
+
+## Scrittura su un file
+Scriviamo `n` byte sul file con file descriptor `fd`. I caratteri vengono presi nella memoria puntata da `buffer`.
+```c
+    #include <unistd.h>
+    
+    int nwrite = write(int fd, char* buffer, int n)
+```
+`ATTENZIONE` buffer **NON** è una stringa ma un _array di byte_
+`Return value` restituisce il _numero di byte_ su cui ha lavorato, se ci sono problemi `nwrite` sarà diverso da `n`.
