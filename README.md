@@ -12,13 +12,13 @@ Operazione di rilascio (_epilogo_): crea il file di nome `name` con i diritti `m
 ```
 `PERM` diritti in ottale
 
-`mode` mode = mode & ~umask (=0022). Significa che _mode_ sarà 0644
+`mode` = mode & ~umask (=0022). Significa che _mode_ sarà 0644
 
 `Return value` file descriptor (_chiave_) del file appena creato, altrimenti un valore < 0
 
 `Errors`
-* Spazio insufficiente
-* Non abbiamo diritti di scrittura
+- Spazio insufficiente
+- Non abbiamo diritti di scrittura
 
 
 
@@ -26,7 +26,7 @@ Operazione di rilascio (_epilogo_): crea il file di nome `name` con i diritti `m
  
 
 # Apertura di un file
-Operazione di richiesta (_prologo_): consente di ottenere una chiave (_indice nella **TFA**_).
+Operazione di richiesta (_prologo_): apre il file di nome `name` in modalità `flag`
 ```c
     #include <fcntl.h> 
     
@@ -44,7 +44,7 @@ Operazione di richiesta (_prologo_): consente di ottenere una chiave (_indice ne
 
 
 # Chiusura di un file
-Chide il file corrispondente al file descriptor `fd`. Alla terminazione del processo la avviene la chiusura automatica dei file.
+Chide il file corrispondente al file descriptor `fd`. Alla terminazione del processo avviene la chiusura automatica dei file.
 ```c
     #include <unistd.h>
     
@@ -61,12 +61,11 @@ Leggiamo `n` byte dal file con file descriptor `fd`. I caratteri letti vengono i
 ```c
     #include <unistd.h>
     
-    int nread = read(int fd, char* buffer, int n)
+    int nread = read(int fd, void* buffer, int n)
 ```
-`ATTENZIONE` buffer **NON** è una stringa ma un _array di byte_
+`ATTENZIONE` buffer **NON** è una stringa ma un _array di byte_ (char*)
 
-`Return value` restituisce il _numero di byte_ su cui ha lavorato, se ci sono problemi `nread` sarà diverso da `n`.
-Se il **file pointer** è sull'EOF ritorna 0
+`Return value` restituisce il _numero di byte_ su cui ha lavorato, altrimenti < 0. Se ci sono problemi `nread` è diverso da `n`. Se il **file pointer** è sull'EOF ritorna 0
 
 
 
@@ -77,11 +76,11 @@ Scriviamo `n` byte sul file con file descriptor `fd`. I caratteri vengono presi 
     #include <unistd.h>
     #include <stdio.h>
     
-    int nwrite = write(int fd, char* buffer, int n)
+    int nwrite = write(int fd, void* buffer, int n)
 ```
-`ATTENZIONE` buffer **NON** è una stringa ma un _array di byte_
+`ATTENZIONE` buffer **NON** è una stringa ma un _array di byte_ (char*)
 
-`Return value` restituisce il _numero di byte_ su cui ha lavorato, se ci sono problemi `nwrite` sarà diverso da `n`.
+`Return value` restituisce il _numero di byte_ su cui ha lavorato, altrimenti < 0. Se ci sono problemi `nwrite` è diverso da `n`.
 
 `<stdio.h>` definisce la costante **BUFSIZ** per allocare un buffer statico
 
