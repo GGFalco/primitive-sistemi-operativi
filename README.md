@@ -63,9 +63,9 @@ Leggiamo `n` byte dal file con file descriptor `fd`. I caratteri letti vengono i
     
     int nread = read(int fd, void* buffer, int n)
 ```
-`ATTENZIONE` buffer **NON** è una stringa ma un _array di byte_ (char*)
-
 `Return value` restituisce il _numero di byte_ su cui ha lavorato, altrimenti < 0. Se ci sono problemi `nread` è diverso da `n`. Se il **file pointer** è sull'EOF ritorna 0
+
+`ATTENZIONE` buffer **NON** è una stringa ma sarà un _array di byte_ nel caso di un _char*_
 
 
 
@@ -78,11 +78,11 @@ Scriviamo `n` byte sul file con file descriptor `fd`. I caratteri vengono presi 
     
     int nwrite = write(int fd, void* buffer, int n)
 ```
-`ATTENZIONE` buffer **NON** è una stringa ma un _array di byte_ (char*)
+`<stdio.h>` definisce la costante **BUFSIZ** per allocare un buffer statico
 
 `Return value` restituisce il _numero di byte_ su cui ha lavorato, altrimenti < 0. Se ci sono problemi `nwrite` è diverso da `n`.
 
-`<stdio.h>` definisce la costante **BUFSIZ** per allocare un buffer statico
+`ATTENZIONE` buffer **NON** è una stringa ma sarà un _array di byte_ nel caso di un _char*_
 
 
 
