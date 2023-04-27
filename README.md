@@ -84,3 +84,19 @@ Scriviamo `n` byte sul file con file descriptor `fd`. I caratteri vengono presi 
 `Return value` restituisce il _numero di byte_ su cui ha lavorato, se ci sono problemi `nwrite` sarà diverso da `n`.
 
 `<stdio.h>` definisce la costante **BUFSIZ** per allocare un buffer statico
+
+
+
+
+
+
+# Muoversi su un file
+Spostiamo il file pointer all'interno del file indicato dal `fd` di `offset` byte a partire dalla posizione `origin`. 
+```c
+    #define <unistd.h>
+    
+    long int newpos = lseek(long int fd, long int offset, int origin)
+```
+`origin` SEEK_SET(0), SEEK_CUR(1), SEEK_END(2)
+
+`Return value` numero di byte a partire dall'inizio del file fino al file pointer
