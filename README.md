@@ -312,7 +312,7 @@ Esempio:
 ```
 Output: su **standard ERROR**
 ```
-Error: No such file or directory
+Errore: No such file or directory
 ```
 
 In UNIX viene modificata anche la variabile globale **errno** con il codice di errore occorso alla system call
