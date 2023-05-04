@@ -187,7 +187,7 @@ Il processo corrente genera un sotto processo figlio. Dopo la generazione si han
 
 
 # Sospensione di un processo
-Sospendiamo un processo padre _in attesa_ della terminazione di uno dei processi figli
+Sospendiamo un processo padre _in attesa_ della terminazione di uno dei processi figli.
 ```c
     #include <sys/wait.h>
     
@@ -210,9 +210,46 @@ nel _byte basso_, segnale che ha provocato la terminazione
 
 
 # Terminazione di un processo
-Chiudiamo tutti i file aperti per il processo che termina
+Chiudiamo tutti i file aperti per il processo che termina.
 ```c
     #include <stdlib.h>
     
     void exit(int status)
 ```
+
+
+
+
+
+# Esecuzione di un programma
+In UNIX possiamo cambiare il programma che un processo sta eseguendo tramite una delle _primitive della famiglia **exec**_.
+
+## Versione V
+```c
+    #include <unistd.h>
+    
+    execv(char* pathname, char** argv)
+```
+
+`pathname` cammino completo che individua un programma
+
+`argv` vettore di stringhe che contiene per ogni posizione: {_comando_, [_opzioni_], [_parametro1_], ..., (_char* 0_)}
+
+
+## Version V + P
+```c
+    #include <unistd.h>
+    
+    execvp(char* name, char** argv)
+```
+
+`name` nome relativo semplice che individua un programma
+
+`argv` vettore di stringhe che contiene per ogni posizione: {_comando_, [_opzioni_], [_parametro1_], ..., (_char* 0_)}
+
+
+## Versione L
+```c
+    #include <unistd.h>
+    
+    execl(char* pathname, char* argv<sub>0</sub>, ..., char* argv<sub>n-1</sub>
