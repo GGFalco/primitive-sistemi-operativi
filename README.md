@@ -291,3 +291,33 @@ Il nome del comando, le opzioni ed i parametri vengono passati direttamente come
 
 `argv0` nome del programma da eseguire (_per convenzione_), gli altri sono le opzioni ed i parametri
 
+
+
+# Gestione degli errori
+In caso di fallimento le System Call ritornano un valore negativo.
+```c
+   void perror(const char* str)
+```
+Esempio:
+```c
+    int main() {
+        
+        int fd;
+        if((fd = open("file.txt", O_RDONLY)) < 0) {
+            perror("Errore: ");
+        }
+        
+        exit(0);
+    }
+```
+Output: su **standard ERROR**
+```
+Error: No such file or directory
+```
+
+In UNIX viene modificata anche la variabile globale **errno** con il codice di errore occorso alla system call
+```c
+    #include <errno.h>
+    
+    extern int errno;
+```
