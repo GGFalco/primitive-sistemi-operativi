@@ -224,11 +224,30 @@ Chiudiamo tutti i file aperti per il processo che termina.
 # Esecuzione di un programma
 In UNIX possiamo cambiare il programma che un processo sta eseguendo tramite una delle _primitive della famiglia **exec**_.
 
+`Return value`
+- **<0** in caso di errore
+- **niente** altrimenti
+
+`Osservazioni`
+- Le primitive **non producono un nuovo processo**, ma lo _trasformano_ con il cambiamento dell'area utente del processo interessato, sia come _codice_ che come _dati_
+- Si torna all'istruzione successiva **solo** in caso di <ins>errore</ins>
+
+`Effetti`
+- L'area _kernel_ viene copiata, i descrittori dei file aperti rimangono tali dopo la exec
+- I _segnali_ vengono modificati (vedremo piu avanti)
+- L'_effective UID_ potrebbe essere modificato se il **SUID** del programma da eseguire è uguale ad 1
+- Si ereditano:
+    - direttorio corrente
+    - file aperti
+    - maschera dei segnali
+    - terminale di controllo e altre caratteristiche
+
 ## Versione V
+Il nome del comando, le opzioni ed i parametri vengono passati tramite un array di stringhe.
 ```c
     #include <unistd.h>
     
-    execv(char* pathname, char** argv)
+    int execv(char* pathname, char** argv)
 ```
 
 `pathname` cammino completo che individua un programma
@@ -236,11 +255,11 @@ In UNIX possiamo cambiare il programma che un processo sta eseguendo tramite una
 `argv` vettore di stringhe che contiene per ogni posizione: {_comando_, [_opzioni_], [_parametro1_], ..., (_char* 0_)}
 
 
-## Version V + P
+## Versione V + P
 ```c
     #include <unistd.h>
     
-    execvp(char* name, char** argv)
+    int execvp(char* name, char** argv)
 ```
 
 `name` nome relativo semplice che individua un programma
@@ -249,8 +268,26 @@ In UNIX possiamo cambiare il programma che un processo sta eseguendo tramite una
 
 
 ## Versione L
+Il nome del comando, le opzioni ed i parametri vengono passati direttamente come parametri alla primitiva.
 ```c
     #include <unistd.h>
     
-    execl(char* pathname, char* argv<sub>0</sub>, ..., char* argv<sub>n-1</sub>
+    int execl(char* pathname, char* argv0, ..., char* argvn-1, (char*) 0)
 ```
+
+`pathname` cammino completo che individua un programma
+
+`argv0` nome del programma da eseguire (_per convenzione_), gli altri sono le opzioni ed i parametri
+
+
+## Versione L + P
+```c
+    #include <unistd.h>
+    
+    int execlp(char* name, char* argv0, ..., char* argvn-1, (char*) 0)
+```
+
+`name` nome relativo semplice che individua un programma
+
+`argv0` nome del programma da eseguire (_per convenzione_), gli altri sono le opzioni ed i parametri
+
