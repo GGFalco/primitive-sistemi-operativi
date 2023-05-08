@@ -321,3 +321,25 @@ In UNIX viene modificata anche la variabile globale **errno** con il codice di e
     
     extern int errno;
 ```
+
+
+# Creazione di una Pipe
+Creiamo due nuovi elementi nella tabella dei file aperti, che ci servono per il piping.
+```c
+    #include <unistd.h>
+    
+    int ret = pipe(int piped[2])
+```
+
+`piped` array in cui vengono memorizzati i rispettivi file descriptor:
+- piped[0] : file descriptor per la _lettura_
+- piped[1] : file descriptor per la _scrittura_
+
+`Return value`
+- **0** in caso di successo
+- **< 0** in caso di insuccesso
+
+`Verso della pipe`
+Il verso è **unidirezionale**. Supponiamo l'esempio in cui il padre deve leggere ed il figlio deve scrivere:
+- il padre <ins>chiude</ins> la scrittura
+- il figlio <ins>chiude</ins> la lettura
