@@ -347,3 +347,19 @@ array in cui vengono memorizzati i rispettivi file descriptor:
 Il verso è **unidirezionale**. Supponiamo l'esempio in cui il padre deve leggere ed il figlio deve scrivere:
 - il padre <ins>chiude</ins> la scrittura
 - il figlio <ins>chiude</ins> la lettura
+
+
+
+# Duplicazione di un file descriptor
+Copiamo l'elemento di indice `fd` della _Tabella dei File Aperti_ nella prima posizione libera
+```c
+    #include <unistd.h>
+    
+    int ret = dup(int fd)
+```
+
+`fd` file descriptor da duplicare
+
+`Return value`
+- **il nuovo file descriptor**
+- **< 0** in caso di insuccesso
