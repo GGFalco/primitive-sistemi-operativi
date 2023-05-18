@@ -363,3 +363,76 @@ Copiamo l'elemento di indice `fd` della _Tabella dei File Aperti_ nella prima po
 `Return value`
 - **il nuovo file descriptor**
 - **< 0** in caso di insuccesso
+
+
+
+# Gestione di un segnale
+Definiamo un **handler** di un segnale, può trattarsi di:
+- `Funzione Handler` una funzione che riceve come parametro un **int** e ritorna **void**
+- `Azione di Default` funzione MACRO **SIG_DFL**
+- `Ignorare` funzione MACRO **SIG_IGN**
+
+All'occorrenza del segnale `signal` viene invocata la funzione `func`
+```c
+    #include <signal.h>
+    
+    void (* signal( int signal, void (*func)(int) ) ) (int)
+```
+
+oppure
+```c
+    #include <signal.h>
+    
+    typedef void (*sighandler_t)(int);
+    
+    sighandler_t signal(int signal, sighandler_t func)
+```
+
+`Osservazioni`
+- Dopo una fork() i processi figli ereditano le funzioni handler del padre
+- Dopo una exec() il processo che viene trasformato, aggancia a funzioni di default quelle che prima erano state assegnate a funzioni handler
+
+
+# Invio di un segnale ad un altro processo
+I processi possono inviare segnali ad altri processi. Il processo invia il segnare `sig` al processo con `pid` specificato
+```c
+    #include <signal.h>
+    #include <sys/types.h>
+    
+    int ret = kill(int pid, int sig)
+```
+
+`Return value`
+- **0** in caso di successo
+- **< 0** in caso di insuccesso
+
+
+# Sospensione di un processo
+Sospendiamo un processo fino alla ricezione di un qualunque segnale
+```c
+    #include <unistd.h>
+    
+    int ret = pause()
+```
+
+
+# Sospesione temporizzata di un processo
+Sospendiamo un processo per `ns` secondi
+```c
+    #include <unistd.h>
+    
+    unsigned int sleep(unsigned int ns)
+```
+
+`Return value`
+- **0** se la sospensione non è stata interrotta da segnali
+- **ns - n** se il risveglio è stato causato da un segnale al tempo `n`
+
+
+# Installazione di un allarme
+Impostiamo un timer che dopo `ns` secondi invierà al processo il segnale **SIGALRM**
+```c
+    #include <unistd.h>
+    
+    unsigned int alarm(unsigned int ns)
+```
